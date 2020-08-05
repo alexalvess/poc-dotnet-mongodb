@@ -1,15 +1,13 @@
-﻿using Domain.Entities;
-using Domain.Entities.Base;
-using Domain.Interfaces;
+﻿using Application.Entities.Base;
+using Application.Interfaces.Base;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Infra.Data.Repositories
+namespace Application.Repositories.Base
 {
     public class BaseRepository<T> : IRepositoryBase<T> where T : BaseEntity
     {

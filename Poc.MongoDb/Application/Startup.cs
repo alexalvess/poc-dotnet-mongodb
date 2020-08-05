@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain.Interfaces;
-using Infra.Data.Repositories;
+using Application.Interfaces;
+using Application.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -34,8 +28,8 @@ namespace Application
             services.AddSingleton<IMongoClient>(c =>
             {
                 var login = "";
-                var password = "";
-                var server = Uri.EscapeDataString("");
+                var password = Uri.EscapeDataString("");
+                var server = "";
 
                 return new MongoClient($"mongodb+srv://{login}:{password}@{server}/test?retryWrites=true&w=majority");
             });

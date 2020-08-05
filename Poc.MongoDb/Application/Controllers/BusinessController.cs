@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.Entities;
-using Domain.Interfaces;
-using Domain.Model;
+using Application.Entities;
+using Application.Interfaces;
+using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -23,7 +23,7 @@ namespace Application.Controllers
 
         [HttpPost]
         [Route("user")]
-        public async Task<IActionResult> InsertUser([FromBody] UserModel userModel)
+        public async Task<IActionResult> InsertUser([FromBody] CreateUserModel userModel)
         {
             _clientSessionHandle.StartTransaction();
 
@@ -45,14 +45,14 @@ namespace Application.Controllers
 
         [HttpPost]
         [Route("authorAndUser")]
-        public async Task<IActionResult> InsertAuthorAndUser([FromBody] AuthorAndUserModel authorAndUserModel)
+        public async Task<IActionResult> InsertAuthorAndUser([FromBody] CreateAuthorAndUserModel authorAndUserModel)
         {
             _clientSessionHandle.StartTransaction();
 
             try
             {
-                var author = new Author(authorAndUserModel.Author.Name, new List<Book>(authorAndUserModel.Author.Books.Select(s => new Book(s.Name, s.Year))));
-                var user = new User(authorAndUserModel.User.Name, authorAndUserModel.User.Nin);
+                var author = new Author(authorAndUserModel.AuthorModel.Name, new List<Book>(authorAndUserModel.AuthorModel.Books.Select(s => new Book(s.Name, s.Year))));
+                var user = new User(authorAndUserModel.UserModel.Name, authorAndUserModel.UserModel.Nin);
 
                 await _repositoryAuthor.InsertAsync(author);
                 await _repositoryUser.InsertAsync(user);
@@ -69,7 +69,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("author")]
+        [Route("author/{id}")]
         public async Task<IActionResult> DeleteAuthorAsync([FromRoute] string id)
         {
             _clientSessionHandle.StartTransaction();
@@ -83,7 +83,6 @@ namespace Application.Controllers
             }
             catch (Exception ex)
             {
-
                 await _clientSessionHandle.AbortTransactionAsync();
 
                 return BadRequest(ex);
@@ -91,8 +90,8 @@ namespace Application.Controllers
         }
 
         [HttpPut]
-        [Route("author")]
-        public async Task<IActionResult> DeleteAuthorAsync([FromRoute] string id, [FromBody] AuthorModel authorModel)
+        [Route("author/{id}")]
+        public async Task<IActionResult> DeleteAuthorAsync([FromRoute] string id, [FromBody] UpdateAuthorModel authorModel)
         {
             _clientSessionHandle.StartTransaction();
 
@@ -116,13 +115,14 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("author/books")]
+        [Route("author/books/{id}")]
         public async Task<IActionResult> GetAuthorsBookAsync([FromRoute] string id)
         {
             try
             {
-                var data = await _repositoryAuthor.GetBooksAsync(id);
-                return Ok(data);
+                var books = await _repositoryAuthor.GetBooksAsync(id);
+                var booksModel = new List<BookModel>(books.Select(s => new BookModel(s.Name, s.Year)));
+                return Ok(booksModel);
             }
             catch (Exception ex)
             {

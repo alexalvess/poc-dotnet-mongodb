@@ -1,17 +1,18 @@
-﻿using Domain.Entities;
-using Domain.Interfaces;
+﻿using Application.Entities;
+using Application.Interfaces;
+using Application.Repositories.Base;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace Infra.Data.Repositories
+namespace Application.Repositories
 {
     public class AuthorRepository : BaseRepository<Author>, IRepositoryAuthor
     {
         public AuthorRepository(
-            IMongoClient mongoClient, 
+            IMongoClient mongoClient,
             IClientSessionHandle clientSessionHandle) : base(mongoClient, clientSessionHandle, "author")
         {
         }

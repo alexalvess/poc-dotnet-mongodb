@@ -2,9 +2,10 @@
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Domain.Entities.Base
+namespace Application.Entities.Base
 {
     public abstract class BaseEntity
     {

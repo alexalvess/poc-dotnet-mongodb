@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Domain.Model
+namespace Application.Models
 {
-    public class AuthorModel
+    public class UpdateAuthorModel
     {
         public string Name { get; set; }
 

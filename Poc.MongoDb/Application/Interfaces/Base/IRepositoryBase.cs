@@ -1,11 +1,10 @@
-﻿using Domain.Entities;
-using Domain.Entities.Base;
+﻿using Application.Entities.Base;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces
+namespace Application.Interfaces.Base
 {
     public interface IRepositoryBase<T> where T : BaseEntity
     {

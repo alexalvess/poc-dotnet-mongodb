@@ -13,8 +13,8 @@ namespace Application.Interfaces
 
         Task<IEnumerable<Author>> GetAuthorsAsync();
 
-        Task<Author> GetAuthorByIdAsync(string id);
+        Task<Author> GetAuthorByIdAsync(string authorId);
 
-        Task<IEnumerable<Author>> GetByAuthorsNameAsync(string name);
+        Task<IEnumerable<Author>> GetAuthorsByNameAsync(string name);
     }
 }

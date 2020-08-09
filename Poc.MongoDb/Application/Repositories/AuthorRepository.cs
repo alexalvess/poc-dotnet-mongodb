@@ -26,13 +26,13 @@ namespace Application.Repositories
         public async Task<IEnumerable<Author>> GetAuthorsAsync() =>
             await Collection.AsQueryable().ToListAsync();
 
-        public async Task<IEnumerable<Book>> GetBooksAsync(string id)
+        public async Task<IEnumerable<Book>> GetBooksAsync(string authorId)
         {
-            var filter = Builders<Author>.Filter.Eq(s => s.Id, id);
+            var filter = Builders<Author>.Filter.Eq(s => s.Id, authorId);
             return await Collection.Find(filter).Project(p => p.Books).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Author>> GetByAuthorsNameAsync(string name)
+        public async Task<IEnumerable<Author>> GetAuthorsByNameAsync(string name)
         {
             var filter = Builders<Author>.Filter.Eq(s => s.Name, name);
             return await Collection.Find(filter).ToListAsync();
